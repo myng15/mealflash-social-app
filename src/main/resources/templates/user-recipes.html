@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('MealFlash User\'s Recipes', 'none')" />
+
+<body>
+<div th:replace="fragments :: navbar">Navigation Menu</div>
+<div class="container text-center">
+    <div><h1>[[${user.fname}]] [[${user.lname}]]'s Recipes</h1></div>
+    <input type="hidden" th:field="${user.id}"/>
+    <div th:if="${#lists.isEmpty(recipes)}">
+        <h3>No recipes created yet.</h3>
+    </div>
+    <div th:if="${successMessage}" th:text="${successMessage}" th:class="${'alert ' + alertClass}"/>
+    <div id="addToShoppingListMessage" class="alert"></div>
+
+    <div class="card-deck d-flex flex-wrap justify-content-center align-items-start mx-1 mx-sm-2 mx-md-3">
+        <div class="card border-warning m-3" th:each="recipe: ${recipes}" style="width: 18rem; max-height: 40rem">
+            <img class="card-img-top p-1 rounded" th:src="@{${recipe.imagePath}}" style="width: 100%; height: 18rem; object-fit: cover;">
+            <div class="card-body">
+                <a th:if="${#strings.toString(#authentication.name)} eq ${#strings.toString(user.username)}"
+                   th:href="@{'/recipes/edit/' + ${recipe.id}}"
+                   class="btn btn-light text-success btn-sm rounded-circle shadow-sm"
+                   data-toggle="tooltip" data-placement="top" title="Edit">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a th:if="${#strings.toString(#authentication.name)} eq ${#strings.toString(user.username)}"
+                   th:href="@{'/recipes/delete/' + ${recipe.id}}"
+                   class="btn btn-light text-danger btn-sm rounded-circle shadow-sm"
+                   data-toggle="tooltip" data-placement="top" title="Delete">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <h5 class="card-title">
+                    <a th:href="@{'/recipe-' + ${recipe.id}}"
+                       class="h5 recipe-title">
+                        <b>[[${recipe.title}]]</b>
+                    </a>
+                </h5>
+                <ul class="nav flex-row justify-content-center">
+                    <li class="nav-item d-flex flex-row m-1" th:each="ingredient, ingredientStat : ${recipe.ingredients}">
+                        <a th:if="${ingredientStat.index < 3}" class="d-inline-block nav-link link-secondary fw-bold p-1 shadow-sm ingredient-tag"
+                           th:href="@{'/recipes/ingredient/' + ${ingredient.id}}">
+                            [[${ingredient.name}]]
+                        </a>
+                        <a th:if="${ingredientStat.index == 2 and ingredientStat.count > 2}"
+                           class="d-inline-block nav-link link-secondary fw-bold p-1" th:href="@{'/recipe-' + ${recipe.id}}">...more</a>
+                    </li>
+                </ul>
+
+                <p class="card-text text-muted m-2" style="font-size: .8rem;" th:text="${#strings.abbreviate(recipe.instructions,100)}"></p>
+                <a th:if="${#strings.length(recipe.instructions) > 100}"
+                   class="d-inline-block nav-link link-secondary fw-bold p-0 mb-1"
+                   th:href="@{'/recipe-' + ${recipe.id}}">Read more</a>
+                <div class="d-flex justify-content-center align-items-center m-0">
+                    <p class="card-text mb-0 mt-1 me-1"><i class="fas fa-clock"></i> [[${recipe.time}]] [[${recipe.timeUnit}]]</p>
+                    &nbsp;
+                    <a th:recipeID="${recipe.id}"
+                       th:recipeTitle="${recipe.title}"
+                       class="addToShoppingListBtn btn btn-light text-warning btn-sm rounded-circle shadow-sm me-1"
+                       data-toggle="tooltip" data-placement="top" title="Add to shopping list">
+                        <i class="fas fa-calendar-plus"></i>
+                    </a>
+                    <a th:href="@{'/recipes/out-of-shopping-list/' + ${recipe.id}}"
+                       class="btn btn-light text-secondary btn-sm rounded-circle shadow-sm"
+                       data-toggle="tooltip" data-placement="top" title="Remove from shopping list">
+                        <i class="fas fa-calendar-times"></i>
+                    </a>
+                </div>
+                <ul class="nav flex-row justify-content-start mx-1" >
+                    <li class="nav-item d-flex flex-row m-1" th:each="category, categoryStat : ${recipe.categories}">
+                        <a th:if="${categoryStat.index < 3}" class="d-inline-block nav-link link-secondary fw-bold bg-light shadow-sm p-1"
+                           th:href="@{'/recipes/category/' + ${category.id}}">
+                            #[[${category}]]
+                        </a>
+                        <a th:if="${categoryStat.index == 2 and categoryStat.count > 2}"
+                           class="d-inline-block nav-link link-secondary fw-bold p-1" th:href="@{'/recipe-' + ${recipe.id}}">...more</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var csrfHeaderName = "[[${_csrf.headerName}]]";
+    var csrfValue = "[[${_csrf.token}]]";
+</script>
+<script th:src="@{/js/addToShoppingList.js}"></script>
+</body>
+</html>

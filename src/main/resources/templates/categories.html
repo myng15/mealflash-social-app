@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('MealFlash Categories', 'none')" />
+
+<body>
+<div class="container-fluid text-center">
+    <div th:replace="fragments :: navbar">Navigation Menu</div>
+    <div class="h1 text-center my-4">MealFlash Categories</div>
+    <div class="my-2">
+        <a th:href="@{/categories/new}" class="btn btn-warning"><i class="fas fa-plus"></i> New Category</a>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="table-warning">
+                <th>ID</th>
+                <th>Category</th>
+            </thead>
+            <tbody>
+                <th:block th:each="category: ${categories}">
+                    <tr>
+                        <td>[[${category.id}]]</td>
+                        <td>[[${category.name}]]</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Access Denied', 'none')" />
+
+<body>
+    <h2>Access denied</h2>
+    <p>Sorry, you don't have permission to access this page. </p>
+    <form th:action="@{/login}" method="post">
+        <input type="submit" class="btn btn-warning" value="Log in as a different user">
+    </form>
+<!--    <div class="text-center p-3">-->
+<!--        <button type="submit" class="btn btn-warning">Log in as a different user</button>-->
+<!--    </div>-->
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('MealFlash Recipes By Category', 'none')" />
+
+<body>
+<div class="container-fluid text-center">
+    <div th:replace="fragments :: navbar">Navigation Menu</div>
+    <div class="h1 text-center my-4"><span class="text-muted bg-light fw-bold p-1">#[[${category}]]</span> Recipes ([[${#lists.size(recipes)}]])</div>
+    <div class="h6 text-center my-2" th:if="${#lists.isEmpty(recipes)}">
+        <h3>There are no recipes in this category.</h3>
+    </div>
+    <div th:replace="fragments :: recipes">MealFlash Recipes By Category</div>
+</div>
+
+</body>
+</html>

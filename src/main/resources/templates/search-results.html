@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('MealFlash Search Results', 'none')" />
+
+<body>
+<div class="container-fluid text-center">
+    <div th:replace="fragments :: navbar">Navigation Menu</div>
+    <h1 class="pt-4 text-dark">Let your <em>flash</em> ideas for this week's meal plan be stored & inspired on
+        <span class="text-warning fw-bold mealflash">MealFlash</span>
+    </h1>
+    <div th:replace="fragments :: recipes">Recipes from MealFlash Community</div>
+<!--    <div sec:authorize="isAuthenticated()">-->
+<!--        <b><span sec:authentication="name">Username</span></b>-->
+<!--        <span sec:authentication="principal.authorities">Roles</span>-->
+<!--        <form th:action="@{/logout}" method="post">-->
+<!--            <input type="submit" value="Log out">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    <div sec:authorize="hasAuthority('admin')"><h1>MealFlash Admin</h1></div>-->
+<!--    <div class="p-2">-->
+<!--        <a class="h2" th:href="@{/users}">List Users</a>-->
+<!--    </div>-->
+
+<!--    <div class="p-2">-->
+<!--        <a class="h2" th:href="@{/categories}">List Categories</a>-->
+<!--    </div>-->
+
+
+</div>
+
+</body>
+</html>

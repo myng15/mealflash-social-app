@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Esteban&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+
+body {
+    background: rgba(255, 248, 238, .6);
+    //font-family: 'Esteban', serif;
+    //font-family: 'Inter', sans-serif;
+    font-family: 'Balsamiq Sans', cursive;
+}
+
+.field-error {
+    border: 2px solid rgba(231, 76, 60, 1);
+}
+
+.form-field {
+    background: #f8f9fa; //#FFF3F0; //#c7e5ff
+    border: 0;
+}
+
+.form-section {
+    background: #FFF;
+}
+
+.recipe-title {
+    text-decoration: none;
+    color: black;
+}
+
+.recipe-title:hover,
+.mealflash:hover {
+    color: #fcc41c;
+    opacity: 0.7;
+    transition: .5s;
+}
+
+.ingredient-tag,
+.recipe-table {
+    background: rgba(255, 248, 238, .9);
+}
+
+
+
+

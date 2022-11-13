@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="page_head(title, remove)" th:remove="${remove}">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>[[${title}]]</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/5.0.2/css/bootstrap.min.css}"/>
+<!--href="http://cdn.jsdelivr.net/webjars/bootstrap/5.0.2/css/bootstrap.min.css"-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<!--    CSS styles must be linked after Bootstrap to be able to overwrite Bootstrap styles-->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <script src="https://kit.fontawesome.com/ea51b2e72b.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div th:fragment="topnav" class="row">
+        <div class="col">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <a th:href="@{/}">Logo
+<!--                    <img th:src="" alt="App Logo">-->
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="topNavbar">
+                    <ul class="navbar-nav">
+                        <th:block sec:authorize="!isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/login}">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/register}">Register</a>
+                            </li>
+                        </th:block>
+
+                        <th:block sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Log out">
+                            </form>
+                        </th:block>
+
+                        <div class="collapse navbar-collapse" id="searchNavbar">
+                            <form class="form-inline my-2 my-lg-0">
+                                <input type="search" name="keyword" size="50"
+                                       class="form-control mr-sm-2" placeholder="keyword" required>
+                                &nbsp;
+                                <input type="submit" value="Search"
+                                       class="btn btn-outline-warning my-2 my-sm-0">
+                            </form>
+                            <ul class="navbar-nav">
+                                <th:block sec:authorize="isAuthenticated()">
+                                    <li class="nav-item">
+<!--                                Without Thymeleaf Security syntax: -->
+<!--                                        <a class="nav-link"-->
+<!--                                           th:href="@{#}"><b>[[${#request.userPrincipal-->
+<!--                                            .principal.fullName}]]</b></a> -->
+<!--                                With Thymeleaf Security syntax: -->
+                                        <a class="nav-link fw-bold" th:href="@{/user-profile}">
+                                            <i class="fas fa-user-circle"></i>
+                                            <span sec:authentication="principal.fullName"></span>
+                                        </a>
+<!-- principal.fullName <- MealFlashUserDetails class's getFullName() method. Similarly, principal.firstName needs a
+getFirstName() method, principal.lastName <- getLastName() etc. NOTE: the principal's property name must be exactly
+the same as the getter method in MealFlashUserDetails class without the word "get" and without 1st letter capitalized
+ i.e. "getFirstName() -> principal.firstName. "principal.name" would work (by default?) as well. -->
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/recipes/new}">New
+                                                Recipe</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/shopping-list}">Shopping List</a>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+<!--    <div th:fragment="searchnav" class="row">-->
+<!--        <div class="col">-->
+
+<!--        </div>-->
+<!--    </div>-->
+
+    <div th:fragment="navbar" class="row" style="width: 100vw">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark ms-0 ps-0">
+            <div class="container-fluid flex-nowrap">
+                <a class="nav-link navbar-brand d-flex align-items-center px-0" th:href="@{/}">
+                    <img th:src="@{/img/logo.png}" style="width: 65px;" alt="MealFlash Logo">
+                    <h5 class="pt-3 text-warning mealflash">MealFlash</h5>
+                </a>
+                <form th:action="@{/search}" method="get" class="input-group" style="max-width: 15rem; height: 2rem;">
+                    <div class="d-flex flex-nowrap">
+                        <input type="search" name="keyword"
+                               class="form-control rounded-0" placeholder="keyword(s)..." required />
+                    </div>
+                    <button type="submit" class="btn btn-warning text-dark">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="navbar-toggler text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav d-flex align-items-center ms-auto me-3" style="line-height: 1.2rem;">
+                        <th:block sec:authorize="!isAuthenticated()">
+                            <li class="nav-item me-1">
+                                <a class="nav-link" th:href="@{/login}">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/register}">Register</a>
+                            </li>
+                        </th:block>
+
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   th:href="@{/user-profile}">
+                                    <span sec:authorize="hasAuthority('Admin')"><i class="fas fa-user-cog"></i></span>
+                                    <span sec:authorize="hasAuthority('Owner')"><i class="fas fa-user-circle"></i></span>
+                                    <span sec:authentication="principal.fullName"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item me-1">
+                                <a class="nav-link" th:href="@{/recipes/new}">New Recipe</a>
+                            </li>
+                            <li sec:authorize="hasAuthority('Admin')" class="nav-item me-1">
+                                <a class="nav-link" th:href="@{/users}">All Users</a>
+                            </li>
+                            <li sec:authorize="hasAuthority('Admin')" class="nav-item me-1">
+                                <a class="nav-link" th:href="@{/categories}">All Categories</a>
+                            </li>
+                            <li class="nav-item me-1">
+                                <a class="nav-link" th:href="@{/shopping-list}">Shopping List</a>
+                            </li>
+
+                            <form th:action="@{/logout}" method="post" class="align-self-center" style="padding-bottom: 2px;">
+                                <input type="submit" value="Log out" class="fw-bold border-0" style="background: none; color: grey;">
+                            </form>
+                        </th:block>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div th:fragment="profilenav" class="row">
+        <div class="col">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <a th:href="@{/}">Logo
+                    <!--                    <img th:src="" alt="App Logo">-->
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="profileNavbar">
+                    <ul class="navbar-nav">
+                        <th:block sec:authorize="!isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/login}">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/register}">Register</a>
+                            </li>
+                        </th:block>
+
+                        <th:block sec:authorize="isAuthenticated()">
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Log out">
+                            </form>
+                        </th:block>
+
+                        <div class="collapse navbar-collapse" id="profileSearchNavbar">
+                            <form class="form-inline my-2 my-lg-0">
+                                <input type="search" name="keyword" size="50"
+                                       class="form-control mr-sm-2" placeholder="keyword" required>
+                                &nbsp;
+                                <input type="submit" value="Search"
+                                       class="btn btn-outline-warning my-2 my-sm-0">
+                            </form>
+                            <ul class="navbar-nav">
+                                <th:block sec:authorize="isAuthenticated()">
+                                    <li class="nav-item">
+                                        <!--                                Without Thymeleaf Security syntax: -->
+                                        <!--                                        <a class="nav-link"-->
+                                        <!--                                           th:href="@{#}"><b>[[${#request.userPrincipal-->
+                                        <!--                                            .principal.fullName}]]</b></a> -->
+                                        <!--                                With Thymeleaf Security syntax: -->
+                                        <a class="nav-link fw-bold" th:href="@{/user-profile}">
+                                            <i class="fas fa-user-circle"></i>
+                                            <span>[[${user.fname}]] [[${user.lname}]]</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/recipes/new}">New
+                                            Recipe</a>
+
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/shopping-list}">Shopping List</a>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div th:fragment="recipes">
+        <div class="card-deck d-flex flex-wrap justify-content-center align-items-start my-4 mx-1 mx-sm-2 mx-md-3">
+                <div class="card shadow rounded m-3" th:each="recipe: ${recipes}" style="width: 18rem;">
+                    <img class="card-img-top p-1 rounded" th:src="@{${recipe.imagePath}}" style="width: 100%; height: 18rem; object-fit: cover;">
+                    <div class="card-body">
+                        <small class="text-muted">
+                            <a class="nav-link link-secondary fw-bold"
+                               th:href="@{'/recipes/creator/' + ${recipe.creator}}">
+                                <i class="fas fa-user-circle"></i>
+                                &nbsp; [[${recipe.creator}]]
+                            </a>
+                        </small>
+                        <h5 class="card-title">
+                            <a th:href="@{'/recipe-' + ${recipe.id}}"
+                               class="h5 recipe-title">
+                                <b>[[${recipe.title}]]</b>
+                            </a>
+                        </h5>
+                        <ul class="nav flex-row justify-content-center">
+                            <li class="nav-item d-flex flex-row m-1" th:each="ingredient, ingredientStat : ${recipe.ingredients}">
+                                <a th:if="${ingredientStat.index < 3}" class="d-inline-block nav-link link-secondary fw-bold p-1 shadow-sm ingredient-tag"
+                                   th:href="@{'/recipes/ingredient/' + ${ingredient.id}}">
+                                    [[${ingredient.name}]]
+                                </a>
+                                <a th:if="${ingredientStat.index == 2 and ingredientStat.count > 2}"
+                                   class="d-inline-block nav-link link-secondary fw-bold p-1" th:href="@{'/recipe-' + ${recipe.id}}">...more</a>
+                            </li>
+                        </ul>
+
+                        <p class="card-text text-muted m-2" style="font-size: .8rem;"
+                           th:text="${#strings.abbreviate(recipe.instructions,100)}"></p>
+                        <a th:if="${#strings.length(recipe.instructions) > 100}"
+                           class="d-inline-block nav-link link-secondary fw-bold p-0 mb-1"
+                           th:href="@{'/recipe-' + ${recipe.id}}">Read more</a>
+                        <div class="d-flex justify-content-center align-items-center mb-2">
+                            <p class="card-text mb-0 mt-2 me-1"><i class="fas fa-clock"></i> [[${recipe.time}]] [[${recipe.timeUnit}]]</p>
+                            &nbsp;
+                            <a th:recipeID="${recipe.id}"
+                               th:recipeTitle="${recipe.title}"
+                               class="addToShoppingListBtn btn btn-light text-warning btn-sm rounded-circle shadow-sm me-1"
+                               data-toggle="tooltip" data-placement="top" title="Add to shopping list">
+                                <i class="fas fa-calendar-plus"></i>
+                            </a>
+                            <a th:href="@{'/recipes/out-of-shopping-list/' + ${recipe.id}}"
+                               class="btn btn-light text-secondary btn-sm rounded-circle shadow-sm"
+                               data-toggle="tooltip" data-placement="top" title="Remove from shopping list">
+                                <i class="fas fa-calendar-times"></i>
+                            </a>
+                        </div>
+                        <ul class="nav flex-row justify-content-start mx-1" >
+                            <li class="nav-item d-flex flex-row m-1" th:each="category, categoryStat : ${recipe.categories}">
+                                <a th:if="${categoryStat.index < 3}" class="d-inline-block nav-link link-secondary fw-bold bg-light shadow-sm p-1"
+                                   th:href="@{'/recipes/category/' + ${category.id}}">
+                                    #[[${category}]]
+                                </a>
+                                <a th:if="${categoryStat.index == 2 and categoryStat.count > 2}"
+                                   class="d-inline-block nav-link link-secondary fw-bold p-1" th:href="@{'/recipe-' + ${recipe.id}}">...more</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div th:fragment="footer" class="text-center m-3">
+        <p>MealFlash Copyright &copy; MealFlash</p>
+    </div>
+
+    <th:block th:fragment="scriptblock">
+        <script type="text/javascript">
+
+            var csrfHeaderName = "[[${_csrf.headerName}]]";
+            var csrfValue = "[[${_csrf.token}]]";
+        </script>
+        <script th:src="@{/js/addToShoppingList.js}"></script>
+    </th:block>
+</body>
+</html>

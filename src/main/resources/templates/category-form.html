@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('MealFlash New Category', 'none')" />
+
+<body>
+<div class="container text-left">
+    <div th:replace="fragments :: navbar" class="text-center">Navigation Menu</div>
+    <div class="text-center"><h1>MealFlash New Category</h1></div>
+
+    <form th:action="@{/categories/save}" th:object="${category}" method="post"
+          style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-3">Category Name: </label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{name}" class="form-control" th:errorclass="field-error" required>
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                         class="alert alert-danger text-italic p-2 ps-3 mt-1"></div>
+                </div>
+            </div>
+            <div class="text-center p-3">
+                <button type="submit" class="btn btn-warning">Save</button>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+</body>
+</html>

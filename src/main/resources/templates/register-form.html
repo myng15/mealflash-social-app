@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('Become MealFlash\'s New User', 'none')" />
+
+<body>
+<div class="container text-left">
+    <div th:if="${user.id == null}" class="text-center"><h1>Become MealFlash's New User!</h1></div>
+    <div th:unless="${user.id == null}" class="text-center">
+        <div><h1>Edit Profile</h1></div>
+        <b><span class="fs-4">[[${user.fname}]] [[${user.lname}]]</span></b>
+        <span class="fs-4 text-muted">(@[[${user.username}]])</span>
+        <span sec:authorize="hasAuthority('Admin')"><small><i class="fas fa-user-cog"></i> ADMIN</small></span>
+        <div><b>[[${user.email}]]</b></div>
+    </div>
+
+    <form th:action="@{/users/save}" th:object="${user}" method="post"
+          style="max-width: 700px; margin: 0 auto;">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="m-3">
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-sm-3">First Name: </label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{fname}" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-sm-3">Last Name: </label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{lname}" class="form-control" required>
+                </div>
+            </div>
+            <div th:if="${user.id == null}" class="form-group row mb-3">
+                <label class="col-form-label col-sm-3">Email: </label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{email}" class="form-control" th:errorclass="field-error" required>
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                         class="alert alert-danger text-italic p-2 ps-3 mt-1"></div>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-sm-3">Username: </label>
+                <div class="col-sm-9">
+                    <input type="text" th:field="*{username}" class="form-control" th:errorclass="field-error" required>
+                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                         class="alert alert-danger text-italic p-2 ps-3 mt-1"></div>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="col-form-label col-sm-3">Password: </label>
+                <div class="col-sm-9">
+                    <input type="password" th:field="*{password}" class="form-control" th:errorclass="field-error" required>
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                         class="alert alert-danger text-italic p-2 ps-3 mt-1"></div>
+                </div>
+            </div>
+            <div class="text-center p-3">
+                <button type="submit" class="btn btn-warning">Submit</button>
+            </div>
+        </div>
+<!--        <div th:if="${errorMessage}" th:text="${errorMessage}" th:class="${'alert ' + alertClass}"/>-->
+<!--        <div th:if="${(bindingResult != null && bindingResult.getAllErrors() != null)}" th:class="${'alert ' + alertClass}">-->
+<!--            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>-->
+<!--            <ul th:each="error : ${bindingResult.getAllErrors()}">-->
+<!--                <li th:text="${error.getObjectName() + ' : ' + error.getDefaultMessage()}"></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+    </form>
+
+</div>
+</body>
+</html>

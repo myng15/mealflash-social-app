@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('MealFlash', 'none')" />
+
+<body>
+<div class="container-fluid text-center" style="max-width: 800px;">
+    <div class="d-flex justify-content-center align-items-center">
+        <img th:src="@{/img/logo.png}" style="width: 65px;" alt="MealFlash Logo">
+        <h5 class="pt-3 text-warning">MealFlash</h5>
+    </div>
+    <div>
+        <h2 class="text-center">Please log in</h2>
+    </div>
+
+    <div th:if="${successMessage}" th:text="${successMessage}" th:class="${'alert ' + alertClass}"/>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" th:class="${'alert ' + alertClass}"/>
+    &nbsp;
+    <div>
+        <a th:href="@{/oauth2/authorization/google}" class="btn btn-lg btn-secondary fab fa-google">&nbsp;Log in with Google</a>
+    </div>
+    <div>&nbsp;</div>
+
+    <div>
+        <a th:href="@{/register}" class="btn btn-lg btn-secondary fab"><i class="far fa-envelope"></i> Sign up with
+            email</a>
+    </div>
+    <div>&nbsp;&nbsp;</div>
+
+    <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">
+        <div th:if="${param.error}">
+            <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+        </div>
+        <div th:if="${param.logout}">
+            <p class="text-warning">You have been logged out.</p>
+        </div>
+
+        <div class="border border-secondary rounded p-3">
+            <p>
+                <input type="email" name="email" class="form-control" placeholder="E-Mail"
+                       required>
+            </p>
+            <p>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </p>
+            <p>
+                <input type="checkbox" name="remember-me">&nbsp;Remember me on this device
+            </p>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+            <p><input type="submit" value="Login" class="btn btn-warning" /></p>
+        </div>
+        <div> <!--th:if="${param.logout}"-->
+            <a th:href="@{/}" class="link-secondary">Visit MealFlash without logging in</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

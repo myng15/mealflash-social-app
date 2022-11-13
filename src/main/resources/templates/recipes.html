@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('MealFlash Recipes', 'none')" />
+
+<body>
+<div th:replace="fragments :: adminnav">Navigation Menu</div>
+<div class="container text-center">
+    <div><h1>MealFlash Recipes</h1></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="table-warning">
+                <th>ID</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Ingredients</th>
+                <th>Instructions</th>
+                <th colspan="2">Duration</th>
+                <th>Creator</th>
+                <th>Categories</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <th:block th:each="recipe: ${recipes}">
+                    <tr>
+                        <td>[[${recipe.id}]]</td>
+                        <td>
+                            <a th:href="@{'/recipe-' + ${recipe.id}}"
+                               style="text-decoration: none; color: black;" class="h4 cursor-pointer">
+                                <b>[[${recipe.title}]]</b>
+                            </a>
+                        </td>
+                        <td>
+                            <img th:src="@{${recipe.imagePath}}" style="width: 100px;"/>
+<!--                           Alternative:
+                            <img th:src="@{'recipe-images/'+${recipe.id}+'/'+${recipe.image}}" style="width: 100px;
+                            "/> -->
+                        </td>
+                        <td>
+                            <table class="table table-light" style="text-align: left">
+                                <tbody>
+                                <tr th:each="ingredient : ${recipe.ingredients}" style="border-color: white;">
+                                    <td>[[${ingredient.name}+': ']]</td>
+                                    <td>[[${ingredient.amount}]]</td>
+                                    <td>[[${ingredient.amountUnit}]]</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>[[${recipe.instructions}]]</td>
+                        <td>[[${recipe.time}]]</td>
+                        <td>[[${recipe.timeUnit}]]</td>
+                        <td><a class="nav-link link-secondary fw-bold"
+                               th:href="@{'/recipes/creator/' + ${recipe.creator}}">
+                            [[${recipe.creator}]]
+                            </a>
+                        </td>
+                        <td>[[${recipe.categories}]]</td>
+<!--                        <td>-->
+<!--                            <a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="btn btn-success btn-sm rounded-0"><i class="fa fa-edit"></i></a>-->
+<!--                            <a th:href="@{'/recipes/delete/' + ${recipe.id}}" class="btn btn-danger btn-sm rounded-0"><i class="fa fa-trash"></i></a>-->
+<!--                            &lt;!&ndash;<ul class="list-inline m-0">-->
+<!--                                <li class="list-inline-item">-->
+<!--                                    <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button>-->
+<!--                                </li>-->
+<!--                                <li class="list-inline-item">-->
+<!--                                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>-->
+<!--                                </li>-->
+<!--                            </ul>&ndash;&gt;-->
+
+
+<!--                        </td>-->
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a th:href="@{'/recipes/new}" class="link-unstyled btn btn-warning">New Recipe</a>
+    </div>
+</div>
+
+<!--<div class="d-flex justify-content-center mt-4">-->
+<!--    <div class="card shadow p-3" style="width: 30rem;">-->
+<!--        <div class="row g-0">-->
+<!--            <div class="col-sm-5 d-flex flex-column" style="height: 100%;">-->
+<!--                <img th:src="@{${recipe.imagePath}}" class="img-fluid rounded-top bg-light" style="width: 100%;" alt="Recipe image" />-->
+<!--            </div>-->
+<!--            <div class="col-sm-7">-->
+<!--                <div class="card-title fw-bold">-->
+<!--                    <span class="fs-3">[[${recipe.title}]</span>-->
+<!--                </div>-->
+<!--                <div class="fs-6 text-muted">@<span>[[${user.username}]]</span></div>-->
+<!--                <div class="p-2 mt-3">-->
+<!--                    <a th:if="${#strings.toString(#authentication.name)} eq ${#strings.toString(user.username)}"-->
+<!--                       th:href="@{'/users/edit/'+${user.id}}"-->
+<!--                       class="btn btn-outline-warning btn-sm rounded text-dark">Edit Profile</a>-->
+<!--                </div>-->
+<!--                <div class="pb-2">-->
+<!--                    <a th:if="${#strings.toString(#authentication.name)} ne ${#strings.toString(user.username)}"-->
+<!--                       th:href="@{'/users/follow/'+${user.username}}"-->
+<!--                       class="btn btn-warning">Follow</a>-->
+<!--                </div>-->
+<!--                <div class="p-2">-->
+<!--                    <a th:href="@{'/users/recipes-by/'+${user.id}}"-->
+<!--                       class="btn btn-outline-warning btn-sm rounded text-dark">My Recipes</a>-->
+<!--                </div>-->
+<!--                <div class="p-2">-->
+<!--                    <a class="btn btn-outline-warning btn-sm rounded text-dark" th:href="@{'/users/' + ${user.id} +'/followers'}">My Followers</a>-->
+<!--                </div>-->
+<!--                <div class="p-2">-->
+<!--                    <a class="btn btn-outline-warning btn-sm rounded text-dark" th:href="@{'/users/' + ${user.id} +'/following'}">MealFlashers I Follow</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container text-center">-->
+<!--    <div><h1>[[${recipe.title}]]</h1></div>-->
+<!--    <div id="addToShoppingListMessage" class="alert"></div>-->
+<!--    <div>-->
+<!--        <table class="table table-bordered">-->
+<!--            <thead class="table-warning">-->
+<!--            <th>Image</th>-->
+<!--            <th>Ingredients</th>-->
+<!--            <th>Instructions</th>-->
+<!--            <th colspan="2">Duration</th>-->
+<!--            <th>Categories</th>-->
+<!--            <th></th>-->
+<!--            </thead>-->
+
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <img th:src="@{${recipe.imagePath}}" style="width: 100px;"/>-->
+<!--                    &lt;!&ndash;                            Alternative: &ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <img th:src="@{'recipe-images/'+${recipe.id}+'/'+${recipe.image}}"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                 style="width: 100px;"/>&ndash;&gt;-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <table class="table table-light" style="text-align: left">-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="ingredient : ${recipe.ingredients}" style="border-color: white;">-->
+<!--                            <td>[[${ingredient.id}]]</td>-->
+<!--                            <td>[[${ingredient.name}+': ']]</td>-->
+<!--                            <td>[[${ingredient.amount}]]</td>-->
+<!--                            <td>[[${ingredient.amountUnit}]]</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </td>-->
+<!--                <td>[[${recipe.instructions}]]</td>-->
+<!--                <td>[[${recipe.time}]]</td>-->
+<!--                <td>[[${recipe.timeUnit}]]</td>-->
+<!--                <td>[[${recipe.categories}]]</td>-->
+<!--                <td>-->
+<!--                    &lt;!&ndash;                            <a th:href="@{'/recipes/into-shopping-list/' + ${recipe.id}}"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                               class="btn btn-success btn-sm rounded-0"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                               data-toggle="tooltip" data-placement="top" title="Add to shopping list">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <i class="fas fa-calendar-plus"></i>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </a>&ndash;&gt;-->
+<!--                    <a th:recipeID="${recipe.id}"-->
+<!--                       th:recipeTitle="${recipe.title}"-->
+<!--                       class="addToShoppingListBtn btn btn-success btn-sm rounded-0"-->
+<!--                       data-toggle="tooltip" data-placement="top" title="Add to shopping list">-->
+<!--                        <i class="fas fa-calendar-plus"></i>-->
+<!--                    </a>-->
+<!--                    &lt;!&ndash;                                th:attr="onclick=|addToShoppingList(${recipe.id}); return false;|"&ndash;&gt;-->
+<!--                    <a th:href="@{'/recipes/out-of-shopping-list/' + ${recipe.id}}"-->
+<!--                       class="btn btn-danger btn-sm rounded-0"-->
+<!--                       data-toggle="tooltip" data-placement="top" title="Remove from shopping list">-->
+<!--                        <i class="fas fa-calendar-times"></i>-->
+<!--                    </a>-->
+<!--                    &lt;!&ndash;                            <th:block th:unless="${#authentication == null}">&ndash;&gt;-->
+
+<!--                    <a-->
+<!--                            th:if="${#strings.toString(#authentication.name)} eq ${#strings.toString(creator.username)}"-->
+<!--                            th:href="@{'/recipes/edit/' + ${recipe.id}}"-->
+<!--                            class="btn btn-success btn-sm rounded-0"-->
+<!--                            data-toggle="tooltip" data-placement="top" title="Edit">-->
+<!--                        <i class="fa fa-edit"></i>-->
+<!--                    </a>-->
+
+<!--                    <a-->
+<!--                            th:if="${#strings.toString(#authentication.name)} eq ${#strings.toString(creator.username)}"-->
+<!--                            th:href="@{'/recipes/delete/' + ${recipe.id}}"-->
+<!--                            class="btn btn-danger btn-sm rounded-0"-->
+<!--                            data-toggle="tooltip" data-placement="top" title="Delete">-->
+<!--                        <i class="fa fa-trash"></i>-->
+<!--                    </a>-->
+
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--function getTooltip(path1){-->
+<!--    var image = new Image();-->
+<!--    image.src = path1;-->
+<!--    var viewer = new Viewer(image, {-->
+<!--    hidden : function() {-->
+<!--    viewer.destroy();-->
+<!--    },-->
+<!--    toolbar : {-->
+<!--    zoomIn : true,-->
+<!--    zoomOut : true,-->
+<!--    oneToOne : false,-->
+<!--    reset : true,-->
+<!--    prev : false,-->
+<!--    play : false,-->
+<!--    next : false,-->
+<!--    rotateLeft : true,-->
+<!--    rotateRight : true,-->
+<!--    flipHorizontal : false,-->
+<!--    flipVertical : false,-->
+<!--    },-->
+<!--    });-->
+<!--    viewer.show();-->
+<!--}-->
+
+<!--</script>-->
+</body>
+</html>

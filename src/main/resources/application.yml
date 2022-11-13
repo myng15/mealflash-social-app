@@ -1,0 +1,36 @@
+server:
+    servlet:
+        context-path: /MealFlash
+spring:
+    datasource:
+        driverClassName: org.h2.Driver
+        password: ''
+        url: jdbc:h2:./data/mealflash_db;AUTO_SERVER=TRUE
+        username: sa
+    h2:
+        console:
+            enabled: true
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 5MB
+            max-request-size: 5MB
+
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: 351440379586-pejhamrcaj5s7ri5co77cd8n4ktv0clg.apps.googleusercontent.com
+                        client-secret: oa475cUAkPaDGsQc_2T4IXEy
+                        scope:
+                        - profile
+                        - email

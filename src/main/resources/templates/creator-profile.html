@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('MealFlash', 'none')" />
+
+<body>
+<div class="container-fluid text-center">
+    <div th:replace="fragments :: navbar">Navigation Menu</div>
+    <div>
+        <b><span class="fs-4">[[${user.fname}]] [[${user.lname}]]</span></b>&nbsp;
+        <span sec:authorize="hasAuthority('Admin')"><small><i class="fas fa-user-cog"></i> ADMIN</small></span>
+    </div>
+    <div class="fs-6 text-muted">@<span>[[${user.username}]]</span></div>
+    <div class="p-2">
+        <a th:href="@{'/users/recipes-by/'+${user.id}}"
+           class="btn btn-warning btn-sm rounded-0">[[${user.fname}]]'s Recipes</a>
+    </div>
+    <div class="p-2">
+        <a class="h2" th:href="@{'/users/' + ${user.id} +'/followers'}">Followers</a>
+    </div>
+    <div class="p-2">
+        <a class="h2" th:href="@{'/users/' + ${user.id} +'/following'}">Following</a>
+    </div>
+    <div class="p-2">
+        <a class="btn btn-warning" th:href="@{'/users/follow/'+${user.username}}">Follow</a>
+    </div>
+
+</div>
+
+</body>
+</html>

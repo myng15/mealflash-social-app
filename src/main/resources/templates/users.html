@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('MealFlash\'s Users', 'none')" />
+
+<body>
+<div class="container-fluid text-center">
+    <div th:replace="fragments :: navbar">Navigation Menu</div>
+    <div class="h1 text-center my-4">MealFlash Users</div>
+    <div th:if="${adminMessage}" th:text="${adminMessage}" th:class="${'alert ' + alertClass}"/>
+
+    <div>
+        <table class="table table-bordered">
+            <thead class="table-warning">
+                <th sec:authorize="hasAuthority('Admin')">ID</th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th sec:authorize="hasAuthority('Admin')">Email</th>
+                <th sec:authorize="hasAuthority('Admin')">Roles</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <th:block th:each="user: ${users}">
+                    <tr>
+                        <td sec:authorize="hasAuthority('Admin')">[[${user.id}]]</td>
+                        <td>[[${user.username}]]</td>
+                        <td>[[${user.fname}]]</td>
+                        <td>[[${user.lname}]]</td>
+                        <td sec:authorize="hasAuthority('Admin')">[[${user.email}]]</td>
+                        <td sec:authorize="hasAuthority('Admin')">[[${user.roles}]]</td>
+                        <td>
+                            <a th:href="@{'/users/recipes-by/' + ${user.id}}"
+                               class="btn btn-warning btn-sm rounded-0"
+                               data-toggle="tooltip" data-placement="top" th:title="'View recipes by ' + ${user.username}"
+                            ><i class="fa fa-table"></i></a>
+                            <a th:href="@{'/users/admin/' + ${user.id}}"
+                               sec:authorize="hasAuthority('Admin')"
+                               class="btn btn-info btn-sm rounded-0"
+                               data-toggle="tooltip" data-placement="top" th:title="'Assign ' + ${user.username} + ' as Admin'"
+                            ><i class="fas fa-user-cog"></i></a>
+                            <a th:href="@{'/users/delete/' + ${user.id}}"
+                               sec:authorize="hasAuthority('Admin')"
+                               class="btn btn-danger btn-sm rounded-0"
+                               data-toggle="tooltip" data-placement="top" title="Delete this account"
+                            ><i
+                                    class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+<!--        <div>-->
+<!--           <a th:href="@{/users/new}" class="link-unstyled btn btn-warning">New User</a>-->
+<!--        </div>-->
+
+</div>
+
+</body>
+</html>

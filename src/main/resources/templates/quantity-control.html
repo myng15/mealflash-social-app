@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="quantity-control(quantity, itemID)">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a href="" class="page-link minusBtn bg-warning text-center text-white h5 shadow-sm rounded me-0"
+                       style="width: 40px; border: none;"
+                       th:itemID="${itemID}"><b>-</b></a>
+                </li>
+                <li class="page-item">
+                    <input type="text" th:value="${quantity}" class="form-control text-center ms-1 me-1"
+                           onkeydown="return false;" style="max-width: 55px"
+                           th:id="'quantity' + ${itemID}"/> <!-- th:id is used (instead of id) to set id attribute
+                           dynamically from string literals and variables -->
+                </li>
+                <li class="page-item">
+                    <a href="" class="page-link plusBtn bg-warning text-center text-white h5 shadow-sm rounded"
+                       style="width: 40px; border: none;"
+                       th:itemID="${itemID}"><b>+</b></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>
