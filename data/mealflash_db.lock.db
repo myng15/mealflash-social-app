@@ -1,6 +1,6 @@
 #FileLock
-#Mon Nov 14 18:34:12 CET 2022
-hostName=localhost
-id=1847734b0196f55fea87f66dc60a995f2c68f50eed0
+#Mon Nov 14 18:56:53 CET 2022
+hostName=192.168.0.4
+id=18477497222710908aa54ca5f81eeaa361de6638a29
 method=file
-server=localhost\:55141
+server=192.168.0.4\:55318

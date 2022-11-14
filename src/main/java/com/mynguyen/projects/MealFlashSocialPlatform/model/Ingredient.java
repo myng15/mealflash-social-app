@@ -19,7 +19,7 @@ public class Ingredient {
     private String name;
 
     @Column(name = "amount", nullable = false)
-    @DecimalMin(value = "0.5", message = "Minimum value is 0.5")
+    @DecimalMin(value = "0", message = "Minimum value is 0")
     @Digits(integer = 3, fraction = 2, message = "Expected number format: XXX.XX") //validates the number of digits in
     // the integral part and fraction part of a decimal number.
     private BigDecimal amount;

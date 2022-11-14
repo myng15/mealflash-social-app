@@ -14,8 +14,8 @@ function decreaseServings(minusBtn){
         itemID = minusBtn.attr("itemID");
         quantityInput = $("#quantity" + itemID);
 
-        newQuantity = parseFloat(quantityInput.val()) - 0.5;
-        if (newQuantity > 0) quantityInput.val(newQuantity);
+        if (parseFloat(quantityInput.val()) > 0) newQuantity = parseFloat(quantityInput.val()) - 0.5;
+        if (newQuantity >= 0) quantityInput.val(newQuantity);
         updateServingsAndIngredientSubtotals(itemID, newQuantity);
 }
 
@@ -24,7 +24,7 @@ function increaseServings(plusBtn){
          quantityInput = $("#quantity" + itemID);
 
          newQuantity = parseFloat(quantityInput.val()) + 0.5;
-         if (newQuantity > 0) quantityInput.val(newQuantity);
+         if (newQuantity >= 0) quantityInput.val(newQuantity);
          updateServingsAndIngredientSubtotals(itemID, newQuantity);
 }
 
