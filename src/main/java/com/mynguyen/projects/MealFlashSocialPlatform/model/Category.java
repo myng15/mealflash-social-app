@@ -13,7 +13,7 @@ public class Category {
     private Integer id;
 
     @Column(length = 150, nullable = false, unique = true)
-    @Max(value = 20, message = "Category name can be max. 20 characters long.")
+//    @Max(value = 50, message = "Category name can be max. 50 characters long.")
     private String name;
 
     @ManyToMany(mappedBy = "categories")

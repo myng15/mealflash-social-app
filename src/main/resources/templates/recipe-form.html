@@ -216,6 +216,7 @@
 
             <div class="text-center p-3">
                 <input type="hidden" th:if="${imageFileName}" id="imageFileName" name="imageFileName" th:value="${imageFileName}"/>
+                <input type="hidden" id="existingImageFileName" name="existingImageFileName" th:value="${recipe.image}"/>
                 <button type="submit" name="save" class="submitBtn btn btn-warning">Save</button>
            </div>
         </div>

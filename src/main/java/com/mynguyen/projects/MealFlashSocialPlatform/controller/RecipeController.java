@@ -329,7 +329,14 @@ public class RecipeController {
 //        String imageName = "error";
 //        InputStream inputStream;
 
-     if (multipartFile.getSize() > 0) {
+        //Secure existing image if available (when in Edit mode)
+        String existingImage = request.getParameter("existingImageFileName");
+        if (existingImage != null) {
+            recipe.setImage(existingImage);
+            recipeRepo.save(recipe);
+        }
+        //Add new image if desired
+        if (multipartFile.getSize() > 0) {
             String imageName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             recipe.setImage(imageName);
             recipeRepo.save(recipe);
