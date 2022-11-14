@@ -6,9 +6,10 @@
 <body>
 <div class="container-fluid text-center">
     <div th:replace="fragments :: navbar">Navigation Menu</div>
-    <h1 class="pt-4 text-dark">Get inspired and store your <em>flash</em> meal ideas on
-        <span class="text-warning fw-bold mealflash">MealFlash</span>
-    </h1>
+    <div class="h1 text-center my-4">Search results for <span class="text-muted bg-light fw-bold p-1">#[[${keyword}]]</span> ([[${#lists.size(recipes)}]])</div>
+    <div class="h6 text-center my-2" th:if="${#lists.isEmpty(recipes)}">
+        <h3>There are no recipes with this keyword.</h3>
+    </div>
     <div th:replace="fragments :: recipes">Recipes from MealFlash Community</div>
 <!--    <div sec:authorize="isAuthenticated()">-->
 <!--        <b><span sec:authentication="name">Username</span></b>-->

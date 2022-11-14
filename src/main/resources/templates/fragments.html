@@ -43,7 +43,8 @@
                         </th:block>
 
                         <div class="collapse navbar-collapse" id="searchNavbar">
-                            <form class="form-inline my-2 my-lg-0">
+                            <form class="form-inline my-2 my-lg-0"
+                                  th:action="@{/search}" method="get">
                                 <input type="search" name="keyword" size="50"
                                        class="form-control mr-sm-2" placeholder="keyword" required>
                                 &nbsp;
@@ -179,7 +180,8 @@ the same as the getter method in MealFlashUserDetails class without the word "ge
                         </th:block>
 
                         <div class="collapse navbar-collapse" id="profileSearchNavbar">
-                            <form class="form-inline my-2 my-lg-0">
+                            <form class="form-inline my-2 my-lg-0"
+                                  th:action="@{/search}" method="get">
                                 <input type="search" name="keyword" size="50"
                                        class="form-control mr-sm-2" placeholder="keyword" required>
                                 &nbsp;

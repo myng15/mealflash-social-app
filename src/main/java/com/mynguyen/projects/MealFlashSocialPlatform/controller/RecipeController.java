@@ -113,6 +113,19 @@ public class RecipeController {
         return "ingredient-recipes";
     }
 
+    @GetMapping("/search")
+    public String search(@Param("keyword") String keyword, Model model) {
+        model.addAttribute("keyword", keyword);
+        String kw = keyword.toLowerCase();
+        System.out.println(keyword);
+        List<Recipe> recipes = recipeRepo.findAll();
+        List<Recipe> recipesWithKeyword = recipes.stream()
+                .filter(recipe -> recipe.getTitle().toLowerCase().contains(kw) || recipe.hasIngredient(kw) || recipe.hasCategory(kw))
+                .collect(Collectors.toList());
+        model.addAttribute("recipes", recipesWithKeyword);
+        return "search-results";
+    }
+
     @GetMapping("/recipes/new")
     public String showNewRecipeForm(@AuthenticationPrincipal MealFlashUserDetails userPrincipal, Model model) {
 //        User user = userRepo.findById(userPrincipal.getId()).get();
