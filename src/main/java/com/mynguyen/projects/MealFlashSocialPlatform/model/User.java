@@ -222,6 +222,10 @@ public class User {
     public void addFollower(MyFollower follower){
         this.followers.add(follower);
     }
+
+    public void removeFollower(MyFollower follower){
+        this.followers.remove(follower);
+    }
     public List<Recipe> getRecipes() {
         return recipes;
     }

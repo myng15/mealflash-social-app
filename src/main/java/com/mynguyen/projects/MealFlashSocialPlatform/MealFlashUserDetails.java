@@ -41,6 +41,10 @@ public class MealFlashUserDetails implements UserDetails {
 //        return this.getFullName();
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getEmail() {
         return user.getEmail();
     } //or directly overriding the getUsername() method defined by UserDetails interface i.e.let it

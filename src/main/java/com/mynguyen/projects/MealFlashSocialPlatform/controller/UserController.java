@@ -102,12 +102,14 @@ public class UserController {
 
             if (user.getId() != null && user.getId() == userPrincipal.getId()) {
                 User editedUser = saveEdits(userPrincipal, request);
+                userDetails.setUser(editedUser); //necessary so that the "authentication/userPrincipal"'s username gets updated as soon as the editedUser's.
                 model.addAttribute("user", editedUser);
 
                 redirectAttributes.addFlashAttribute("successMessage", "Profile has been updated.");
                 redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 
                 return "redirect:/user-profile";
+//                return "redirect:/login";
             }
         }
         else if (authentication == null && user.getId() == null){
@@ -182,6 +184,26 @@ public class UserController {
         MyFollower follower = new MyFollower(new MyFollower.MyFollowerId(followedUser.getId(), userPrincipal.getId()), followedUser, me);
         followedUser.addFollower(follower);
         followerRepo.save(follower);
+        model.addAttribute("userPrincipal", me);
+        model.addAttribute("user", followedUser);
+        return "redirect:/recipes/creator/" + followedUser.getUsername();
+//        }
+    }
+
+    @GetMapping("/users/unfollow/{username}")
+    public String unfollowUser(@PathVariable("username") String username,
+                             @AuthenticationPrincipal MealFlashUserDetails userPrincipal,
+                             Model model, RedirectAttributes redirectAttributes) {
+        if (userPrincipal == null) {
+            return "login";
+        }
+        User followedUser = userRepo.getUserByUsername(username);
+        User me = userRepo.findById(userPrincipal.getId()).get();
+        redirectAttributes.addFlashAttribute("successMessage", "You has unfollowed " + followedUser.getUsername() + ".");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+        MyFollower follower = new MyFollower(new MyFollower.MyFollowerId(followedUser.getId(), userPrincipal.getId()), followedUser, me);
+        followedUser.removeFollower(follower);
+        followerRepo.delete(follower);
         model.addAttribute("userPrincipal", me);
         model.addAttribute("user", followedUser);
         return "redirect:/recipes/creator/" + followedUser.getUsername();

@@ -55,6 +55,9 @@ public class RecipeController {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private MyFollowerRepository followerRepo;
+
     @GetMapping("/recipes")
     public String listRecipes(Model model) {
         List<Recipe> recipes = recipeRepo.findAll();
@@ -476,6 +479,16 @@ public class RecipeController {
         if (userPrincipal != null) {
             User me = userRepo.findById(userPrincipal.getId()).get();
             model.addAttribute("userPrincipal", me);
+
+            List<MyFollower> followers = followerRepo.findAll();
+            List<User> followedByMe = new ArrayList<>();
+            for (MyFollower follower : followers) {
+                if (follower.getMyFollower().getId() == me.getId()) {
+                    followedByMe.add(follower.getMe());
+                }
+            }
+            boolean followed = followedByMe.contains(user);
+            model.addAttribute("followed", followed);
         }
         return "user-profile";
     }

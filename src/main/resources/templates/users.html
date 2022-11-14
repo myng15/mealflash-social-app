@@ -24,7 +24,12 @@
                 <th:block th:each="user: ${users}">
                     <tr>
                         <td sec:authorize="hasAuthority('Admin')">[[${user.id}]]</td>
-                        <td>[[${user.username}]]</td>
+                        <td>
+                            <a class="nav-link link-secondary fw-bold"
+                               th:href="@{'/recipes/creator/' + ${user.username}}">
+                                &nbsp; [[${user.username}]]
+                            </a>
+                        </td>
                         <td>[[${user.fname}]]</td>
                         <td>[[${user.lname}]]</td>
                         <td sec:authorize="hasAuthority('Admin')">[[${user.email}]]</td>
