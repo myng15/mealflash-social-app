@@ -7,6 +7,7 @@
 <div class="container-fluid">
     <div th:replace="fragments :: navbar">Navigation Menu</div>
     <div class="h1 text-center my-4">My Shopping List</div>
+    <div th:if="${addToShoppingListMessage}" th:text="${addToShoppingListMessage}" th:class="${'alert ' + alertClass}"/>
     <div th:if="${successMessage}" th:text="${successMessage}" th:class="${'alert ' + alertClass}"/>
     <div th:if="${errorMessage}" th:text="${errorMessage}" th:class="${'alert ' + alertClass}"/>
 <!--    <div class="card shadow" style="max-width: 90%;">-->
@@ -52,7 +53,7 @@
                     <div th:replace="quantity-control :: quantity-control(${item.servings},${item.recipe.id})">
                         Servings
                     </div>
-                    <div id="addToShoppingListMessage" class="alert p-0 m-0"></div>
+<!--                    <div id="addToShoppingListMessage" class="alert p-0 m-0"></div>-->
                 </div>
             </div>
         </div>

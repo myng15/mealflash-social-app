@@ -22,7 +22,7 @@
 <!--        <input type="hidden" th:field="*{creator}" value="${#request.userPrincipal.principal.id}"-->
 <!--               class="form-control">&lt;!&ndash;th:value="$-->
 <!--        class="form-control">-->
-        <input type="hidden" th:field="*{id}"/>
+        <input id="recipeID" type="hidden" th:field="*{id}"/>
         <div class="m-3">
             <div class="form-section p-3 mb-3">
                 <div class="form-group row mb-3">
@@ -150,7 +150,8 @@
                                class="form-control form-field">
                     </div>
                     <div class="col-sm-1 ps-3 pt-1">
-                        <button name="removeIngredient"
+                        <button id="removeIngredient"
+                                name="removeIngredient"
                                 th:value="${rowStat.index}"
                                 class="btn btn-transparent btn-sm rounded-0"
                                 data-toggle="tooltip" data-placement="top" title="Delete">
@@ -199,7 +200,8 @@
 
             <div class="form-section p-3 mb-3">
                 <div class="form-group row mb-2">
-                    <label class="col-form-label col-sm-2">Image: </label>
+                    <label th:if="${recipe.id == null}" class="col-form-label col-sm-2">Image: </label>
+                    <label th:unless="${recipe.id == null}" class="col-form-label col-sm-2">Change image: </label>
                     <div class="col-sm-10">
                         <div class="form-group row mb-3">
                             <input type="file" id="imageFile" name="imageFile" accept="image/png, image/jpeg, image/jpg, image/webp">
@@ -208,7 +210,6 @@
                             <img id="thumbnail" class="img-thumbnail" alt="Image Preview"
                                  th:src="@{${recipe.imagePath}}" style="max-width: 300px" >
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -322,7 +323,8 @@ crossorigin="anonymous"></script> - jQuery already imported above -->
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "[[@{'/recipes/new/addIngredient'}]]",
+                url: $('#recipeID').val() == null ? "[[@{'/recipes/new/addIngredient'}]]" :
+                                                    "[[@{'/recipes/edit/{id}/addIngredient'}]]",
                 data: JSON.stringify(formData),
                 dataType: 'json',
                 success: function(result){

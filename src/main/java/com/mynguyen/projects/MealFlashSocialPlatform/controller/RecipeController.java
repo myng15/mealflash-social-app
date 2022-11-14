@@ -174,6 +174,7 @@ public class RecipeController {
                                 HttpServletRequest request) {
         List<Category> categories = categoryRepo.findAll();
         model.addAttribute("categories", categories);
+        model.addAttribute("recipe", recipe);
 
         recipe.getIngredients().add(new Ingredient());
 
@@ -184,6 +185,7 @@ public class RecipeController {
             // It is a standard HTTP request, render whole page.
             return "recipe-form";
         }
+
 //        return "recipe-form";
 }
 
@@ -195,6 +197,7 @@ public class RecipeController {
 
         List<Category> categories = categoryRepo.findAll();
         model.addAttribute("categories", categories);
+        model.addAttribute("recipe", recipe);
 
         if (AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))) {
             return "recipe-form::#items";

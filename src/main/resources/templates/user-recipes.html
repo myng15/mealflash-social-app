@@ -12,7 +12,7 @@
         <h3>No recipes created yet.</h3>
     </div>
     <div th:if="${successMessage}" th:text="${successMessage}" th:class="${'alert ' + alertClass}"/>
-    <div id="addToShoppingListMessage" class="alert"></div>
+<!--    <div id="addToShoppingListMessage" class="alert"></div>-->
 
     <div class="card-deck d-flex flex-wrap justify-content-center align-items-start mx-1 mx-sm-2 mx-md-3">
         <div class="card border-warning m-3" th:each="recipe: ${recipes}" style="width: 18rem; max-height: 40rem">
@@ -54,7 +54,8 @@
                 <div class="d-flex justify-content-center align-items-center m-0">
                     <p class="card-text mb-0 mt-1 me-1"><i class="fas fa-clock"></i> [[${recipe.time}]] [[${recipe.timeUnit}]]</p>
                     &nbsp;
-                    <a th:recipeID="${recipe.id}"
+                    <a th:href="@{'/recipes/into-shopping-list/' + ${recipe.id}}"
+                       th:recipeID="${recipe.id}"
                        th:recipeTitle="${recipe.title}"
                        class="addToShoppingListBtn btn btn-light text-warning btn-sm rounded-circle shadow-sm me-1"
                        data-toggle="tooltip" data-placement="top" title="Add to shopping list">

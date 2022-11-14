@@ -6,7 +6,7 @@
 <body>
 <div class="container-fluid">
 <div th:replace="fragments :: navbar">Navigation Menu</div>
-<div id="addToShoppingListMessage" class="alert"></div>
+<!--<div id="addToShoppingListMessage" class="alert"></div>-->
 <!--<div class="mx-auto my-0" style="max-width: 1000px;">-->
     <div class="card rounded shadow mx-auto my-2 py-1 justify-content-center align-items-center" style="min-width: 450px; max-width: 1000px;">
         <div class="row" style="width: 100%;">
@@ -15,7 +15,8 @@
             </div>
             <div class="col-md-8 col-sm-11 col-xs-10 mb-3 py-1 px-xs-1 pt-sm-1">
                 <div class="mb-2 d-flex flex-row justify-content-start">
-                    <a th:recipeID="${recipe.id}"
+                    <a th:href="@{'/recipes/into-shopping-list/' + ${recipe.id}}"
+                       th:recipeID="${recipe.id}"
                        th:recipeTitle="${recipe.title}"
                        class="addToShoppingListBtn btn btn-light text-warning btn-sm rounded-circle shadow-sm me-1"
                        data-toggle="tooltip" data-placement="top" title="Add to shopping list">

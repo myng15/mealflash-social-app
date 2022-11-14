@@ -48,7 +48,7 @@ public class ShoppingListController {
         model.addAttribute("shoppingListItems", shoppingListItems);
         return "shopping-list";
     }
-    @PostMapping("/recipes/into-shopping-list/{id}")
+    @GetMapping("/recipes/into-shopping-list/{id}")
     public String addRecipeToShoppingList(@PathVariable("id") Integer recipeID,
                                           @AuthenticationPrincipal MealFlashUserDetails userPrincipal,
                                           Model model, RedirectAttributes redirectAttributes){
@@ -71,7 +71,10 @@ public class ShoppingListController {
         };
         shoppingListItemRepo.save(item);
 
-        return "recipe::#addToShoppingListMessage";
+//        return "recipe::#addToShoppingListMessage"; //if use ajax function addToShoppingList.js then return only #addToShoppingListMessage section, no page refresh
+        redirectAttributes.addFlashAttribute("addToShoppingListMessage", "Recipe for 1 serving of \"" + recipe.getTitle() + "\"" + " was added to your shopping list.");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+        return "redirect:/shopping-list";
     }
 
     @GetMapping("/recipes/out-of-shopping-list/{id}")
