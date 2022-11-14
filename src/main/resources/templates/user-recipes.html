@@ -6,7 +6,7 @@
 <body>
 <div th:replace="fragments :: navbar">Navigation Menu</div>
 <div class="container text-center">
-    <div><h1>[[${user.fname}]] [[${user.lname}]]'s Recipes</h1></div>
+    <div class="pt-4"><h1>[[${user.fname}]] [[${user.lname}]]'s Recipes</h1></div>
     <input type="hidden" th:field="${user.id}"/>
     <div th:if="${#lists.isEmpty(recipes)}">
         <h3>No recipes created yet.</h3>
@@ -42,7 +42,7 @@
                            th:href="@{'/recipes/ingredient/' + ${ingredient.id}}">
                             [[${ingredient.name}]]
                         </a>
-                        <a th:if="${ingredientStat.index == 2 and ingredientStat.count > 2}"
+                        <a th:if="${ingredientStat.index == 2 and ingredientStat.count >= 3}"
                            class="d-inline-block nav-link link-secondary fw-bold p-1" th:href="@{'/recipe-' + ${recipe.id}}">...more</a>
                     </li>
                 </ul>
@@ -72,7 +72,7 @@
                            th:href="@{'/recipes/category/' + ${category.id}}">
                             #[[${category}]]
                         </a>
-                        <a th:if="${categoryStat.index == 2 and categoryStat.count > 2}"
+                        <a th:if="${categoryStat.index == 2 and categoryStat.count >= 3}"
                            class="d-inline-block nav-link link-secondary fw-bold p-1" th:href="@{'/recipe-' + ${recipe.id}}">...more</a>
                     </li>
                 </ul>

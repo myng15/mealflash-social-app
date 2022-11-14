@@ -297,7 +297,7 @@ public class RecipeController {
         // Path "./src/main/resources/static/recipe-images/" is relative to the application directory - placing uploadDir in the application folder ist not recommended
 
 //        String uploadDir = "../MealFlash-recipe-images/" + savedRecipe.getId();
-        String uploadDir = "../MealFlash-recipe-images/" + savedRecipe.getId();
+        String uploadDir = "./MealFlash-recipe-images/" + savedRecipe.getId();
         // Path "../MealFlash-recipe-images/" is 1 level up outside of the application directory
 
         Path uploadPath = Paths.get(uploadDir);
@@ -356,7 +356,7 @@ public class RecipeController {
         List<Recipe> recipesFromCreator = user.getRecipes();
         model.addAttribute("recipes", recipesFromCreator);
 
-        model.addAttribute("test1", ingredientNames.get(3));
+//        model.addAttribute("test1", ingredientNames.get(3));
 //        model.addAttribute("test2", testPath);
         return "user-recipes";
     }

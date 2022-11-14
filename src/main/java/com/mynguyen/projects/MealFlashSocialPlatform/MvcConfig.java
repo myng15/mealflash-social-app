@@ -22,7 +22,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //        exposeDirectory("./src/main/resources/static/recipe-images", registry);
 
 // Instead - Save picture to a folder outside application folder:
-        exposeDirectory("../MealFlash-recipe-images", registry);
+        exposeDirectory("./MealFlash-recipe-images", registry);
 
 // exposeDirectory() function is to hide the absolute path instead of doing as follows:
 //        String myExternalFilePath = "file:///Users/[Absolute Path]/../MealFlash-recipe-images/";
@@ -37,7 +37,7 @@ public class MvcConfig implements WebMvcConfigurer {
         Path uploadDir = Paths.get(dirName);
         String uploadPath = uploadDir.toFile().getAbsolutePath();
 
-        if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
+        if (dirName.startsWith("./")) dirName = dirName.replace("./", "");
 
         registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file://"+ uploadPath + "/");
     }

@@ -5473,3 +5473,7 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:622)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 18 more
+2022-11-14 11:45:41 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "update recipe set image = black-sesame-mochi.jpeg[*]' where id = 16"
+Syntax error in SQL statement "update recipe set image = black-sesame-mochi.jpeg[*]' where id = 16"; SQL statement:
+update recipe set image = black-sesame-mochi.jpeg' where id = 16 [42000-200]
