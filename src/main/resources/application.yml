@@ -1,6 +1,6 @@
 server:
     servlet:
-        context-path: /MealFlash
+        context-path: /
 spring:
     datasource:
         driverClassName: org.h2.Driver
